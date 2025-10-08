@@ -1,6 +1,14 @@
 {
-  "name": "api",
+  "name": "@professor03/pomodoro-board-server",
+  "version": "0.1.0",
   "type": "commonjs",
+  "main": "src/index.js",
+  "files": [
+    "src"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "scripts": { "dev": "nodemon src/index.js" },
   "dependencies": {
     "cors": "^2.8.5",
