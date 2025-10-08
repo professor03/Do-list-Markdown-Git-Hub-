@@ -1,0 +1,10 @@
+{
+  "name": "pomodoro-board",
+  "private": true,
+  "workspaces": ["client", "server"],
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "npm -w server run dev & npm -w client run dev",
+    "postinstall": "npm -w client ci --silent || npm -w client install && npm -w server ci --silent || npm -w server install"
+  }
+}
