@@ -2,10 +2,12 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 app.use(cors({ origin: process.env.CLIENT_ORIGIN, credentials: false }));
 app.use(express.json());
+app.use('/media', express.static(path.join(__dirname, '../../Music')));
 
 app.get('/api/health', (_, res) => res.json({ ok: true }));
 

@@ -17,8 +17,8 @@ export interface AppState {
 
 export type Action =
   | { type: 'SET_ALL'; payload: Partial<AppState> }
-  | { type: 'ADD_TODO'; title: string; backendId?: string }
-  | { type: 'SYNC_TODO'; id: string; backendId: string }
+  | { type: 'ADD_TODO'; title: string; id?: string }
+  | { type: 'SYNC_TODO'; id: string; todo: Todo }
   | { type: 'TOGGLE_TODO'; id: string }
   | { type: 'REMOVE_TODO'; id: string }
   | { type: 'START_SESSION' }

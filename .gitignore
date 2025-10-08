@@ -3,3 +3,5 @@ dist/
 .vscode/
 .env
 .DS_Store
+client/public/Music/
+!client/public/Music/.keep

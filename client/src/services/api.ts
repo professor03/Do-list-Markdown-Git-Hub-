@@ -17,3 +17,6 @@ export async function saveSettings(p:{focusLength:number;breakLength:number}){
 export async function saveSession(p:{todoId?:string;phase:'focus'|'break';durationSec:number;startedAt:string;endedAt:string}){
   return fetch(`${BASE}/sessions`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(p) }).then(r=>r.json());
 }
+export async function getSessionStats(){
+  return fetch(`${BASE}/sessions/stats`).then(r=>r.json());
+}

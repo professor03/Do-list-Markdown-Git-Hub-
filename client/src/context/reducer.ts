@@ -1,5 +1,10 @@
 import type { AppState, Action } from './types';
 
+const generateId = () =>
+  (typeof crypto !== 'undefined' && 'randomUUID' in crypto)
+    ? crypto.randomUUID()
+    : Math.random().toString(36).slice(2);
+
 export const initialState: AppState = {
   todos: [],
   pomodoro: { phase: 'focus', remainingSec: 25*60, focusLength: 25*60, breakLength: 5*60, running: false },
@@ -8,16 +13,19 @@ export const initialState: AppState = {
 
 export function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
-    case 'SET_ALL': return { ...state, ...action.payload } as AppState;
+    case 'SET_ALL':
+      return { ...state, ...action.payload } as AppState;
     case 'ADD_TODO': {
-      const id = crypto.randomUUID();
+      const id = action.id ?? generateId();
       return { ...state, todos: [{ id, title: action.title, done: false, createdAt: Date.now() }, ...state.todos] };
     }
-    case 'SYNC_TODO': {
-      return state; // 後端 id 僅供示意，簡化不存本地
-    }
+    case 'SYNC_TODO':
+      return {
+        ...state,
+        todos: state.todos.map(t => (t.id === action.id ? action.todo : t))
+      };
     case 'TOGGLE_TODO':
-      return { ...state, todos: state.todos.map(t => t.id === action.id ? { ...t, done: !t.done } : t) };
+      return { ...state, todos: state.todos.map(t => (t.id === action.id ? { ...t, done: !t.done } : t)) };
     case 'REMOVE_TODO':
       return { ...state, todos: state.todos.filter(t => t.id !== action.id) };
     case 'START_SESSION':
@@ -39,6 +47,7 @@ export function reducer(state: AppState, action: Action): AppState {
     }
     case 'SET_MARKDOWN':
       return { ...state, notes: { markdown: action.markdown } };
-    default: return state;
+    default:
+      return state;
   }
 }
